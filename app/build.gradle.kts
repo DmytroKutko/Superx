@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.gms.google.services)
 
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -75,6 +77,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Firebase
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)

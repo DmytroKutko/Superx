@@ -2,6 +2,8 @@ package com.superx.heroes.di
 
 import android.content.Context
 import androidx.room.Room
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.superx.heroes.api.HeroesApi
 import com.superx.heroes.database.HeroDao
 import com.superx.heroes.database.LocalDatabase
@@ -31,6 +33,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAnalytics() = Firebase.analytics
 
     @Provides
     @Singleton
