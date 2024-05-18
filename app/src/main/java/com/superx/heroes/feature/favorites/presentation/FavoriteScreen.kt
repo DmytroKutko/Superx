@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.superx.heroes.R
+import com.superx.heroes.feature.core.presentation.EmptyScreen
 import com.superx.heroes.feature.core.presentation.ErrorScreen
 import com.superx.heroes.feature.core.presentation.LoadingScreen
 import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
@@ -109,11 +110,17 @@ fun FavoriteScreen(
                 }
 
                 is Response.Success -> {
-                    HeroesList(
-                        heroes = it.data,
-                        listState = lazyStaggeredGridState,
-                        onHeroClick = onHeroClick
-                    )
+                    if (it.data.isNotEmpty()) {
+                        HeroesList(
+                            heroes = it.data,
+                            listState = lazyStaggeredGridState,
+                            onHeroClick = onHeroClick
+                        )
+                    } else {
+                        EmptyScreen(
+                            title = stringResource(R.string.mark_heroes_from_list_as_favorites_to_see_them_here)
+                        )
+                    }
                 }
             }
         }
