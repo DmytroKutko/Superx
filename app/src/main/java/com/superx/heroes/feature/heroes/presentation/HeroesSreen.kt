@@ -20,10 +20,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.superx.heroes.R
 import com.superx.heroes.feature.core.presentation.ErrorScreen
 import com.superx.heroes.feature.core.presentation.LoadingScreen
+import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
 import com.superx.heroes.feature.heroes.presentation.components.HeroesList
 import com.superx.heroes.util.Response
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -67,7 +70,8 @@ fun HeroesScreen(
                     .background(color = MaterialTheme.colorScheme.secondary),
                 title = {
                     Text(
-                        text = "All Heroes"
+                        text = stringResource(R.string.heroes),
+                        fontFamily = ubuntuFontFamily,
                     )
                 })
         }
@@ -94,7 +98,7 @@ fun HeroesScreen(
         ) {
             when (it) {
                 is Response.Error -> {
-                    val msg = it.error.localizedMessage ?: "Error Loading"
+                    val msg = it.error.localizedMessage ?: stringResource(R.string.error_loading)
                     ErrorScreen(msg)
                 }
 

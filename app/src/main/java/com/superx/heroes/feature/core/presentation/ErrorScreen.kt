@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
 
 @Composable
 fun ErrorScreen(
@@ -35,11 +36,11 @@ fun ErrorScreen(
                 contentDescription = null
             )
             Text(
-                text = msg,
-                fontFamily = FontFamily.Monospace,
-                fontSize = 16.sp,
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = 8.dp),
+                text = msg,
+                fontFamily = ubuntuFontFamily,
+                fontSize = 16.sp,
             )
         }
     }

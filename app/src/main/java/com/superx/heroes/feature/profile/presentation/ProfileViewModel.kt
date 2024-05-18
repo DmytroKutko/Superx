@@ -26,6 +26,7 @@ class ProfileViewModel @Inject constructor(
             placeOfBirth = "",
             avatarUrl = "",
             occupation = "",
+            avatarUrlHighResolution = "",
             isBookmarked = false
         )
     )

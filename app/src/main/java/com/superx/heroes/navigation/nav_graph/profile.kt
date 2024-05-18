@@ -30,7 +30,7 @@ fun NavGraphBuilder.profile(navController: NavController) {
         }
     ) { entry ->
         entry.arguments?.getInt("heroId")?.let {
-            ProfileScreen(it)
+            ProfileScreen(it, navController)
         }
     }
 

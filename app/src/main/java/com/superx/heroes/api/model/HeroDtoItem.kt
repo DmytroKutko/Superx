@@ -45,6 +45,7 @@ fun List<HeroDtoItem>.toDomain(): List<Hero> {
             placeOfBirth = it.biography.placeOfBirth,
             occupation = it.work.occupation,
             avatarUrl = it.images.md,
+            avatarUrlHighResolution = it.images.lg,
             isBookmarked = false
         )
     }

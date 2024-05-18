@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -42,12 +43,12 @@ fun PowerstatsComponent(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        StatWithIndicator("Intelligence", R.drawable.brainstorm, powerstats.intelligence)
-        StatWithIndicator("Strength", R.drawable.strength, powerstats.strength)
-        StatWithIndicator("Speed", R.drawable.running, powerstats.speed)
-        StatWithIndicator("Durability", R.drawable.durability, powerstats.durability)
-        StatWithIndicator("Power", R.drawable.power, powerstats.power)
-        StatWithIndicator("Combat", R.drawable.combat, powerstats.combat)
+        StatWithIndicator(stringResource(R.string.intelligence), R.drawable.brainstorm, powerstats.intelligence)
+        StatWithIndicator(stringResource(R.string.strength), R.drawable.strength, powerstats.strength)
+        StatWithIndicator(stringResource(R.string.speed), R.drawable.running, powerstats.speed)
+        StatWithIndicator(stringResource(R.string.durability), R.drawable.durability, powerstats.durability)
+        StatWithIndicator(stringResource(R.string.power), R.drawable.power, powerstats.power)
+        StatWithIndicator(stringResource(R.string.combat), R.drawable.combat, powerstats.combat)
     }
 }
 

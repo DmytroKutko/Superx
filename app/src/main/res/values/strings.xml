@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Superx</string>
+    <string name="favorites">Favorites</string>
+    <string name="heroes">Heroes</string>
+    <string name="power_stats">Power Stats</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="strength">Strength</string>
+    <string name="speed">Speed</string>
+    <string name="durability">Durability</string>
+    <string name="power">Power</string>
+    <string name="combat">Combat</string>
+    <string name="error_loading">Error Loading</string>
+    <string name="place_of_birth">Place of birth:</string>
+    <string name="occupation">Occupation:</string>
 </resources>

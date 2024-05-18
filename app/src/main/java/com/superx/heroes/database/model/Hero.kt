@@ -14,5 +14,6 @@ data class Hero(
     val placeOfBirth: String?,
     val occupation: String?,
     val avatarUrl: String,
+    val avatarUrlHighResolution: String,
     val isBookmarked: Boolean = false,
 )
