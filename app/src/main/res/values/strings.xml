@@ -13,4 +13,5 @@
     <string name="place_of_birth">Place of birth:</string>
     <string name="occupation">Occupation:</string>
     <string name="mark_heroes_from_list_as_favorites_to_see_them_here">Mark heroes from list as favorites to see them here</string>
+    <string name="press_back_again_to_exit">Press back again to exit</string>
 </resources>
