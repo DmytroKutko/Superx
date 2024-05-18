@@ -1,11 +1,13 @@
 package com.superx.heroes.feature.profile.presentation
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
@@ -92,58 +94,63 @@ fun ProfileScreen(
             )
         }
     ) { paddingValues ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            FullScreenCircleImage(
-                hero.avatarUrlHighResolution
-            )
+            item {
+                FullScreenCircleImage(
+                    hero.avatarUrlHighResolution
+                )
+            }
 
-            Text(
-                text = name,
-                fontFamily = ubuntuFontFamily,
-                fontSize = 22.sp,
-                modifier = Modifier
-                    .padding(vertical = 8.dp),
-                softWrap = false,
-                overflow = TextOverflow.Clip
-            )
+            item {
+                Text(
+                    text = name,
+                    fontFamily = ubuntuFontFamily,
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .padding(vertical = 8.dp),
+                    softWrap = false,
+                    overflow = TextOverflow.Clip
+                )
+            }
 
-            hero.placeOfBirth?.let { placeOfBirth ->
-                if (placeOfBirth.isNotEmpty()) {
-                    AnnotatedText(
-                        stringResource(R.string.place_of_birth),
-                        placeOfBirth
-                    )
+            item {
+                hero.placeOfBirth?.let { placeOfBirth ->
+                    if (placeOfBirth.isNotEmpty()) {
+                        AnnotatedText(
+                            stringResource(R.string.place_of_birth),
+                            placeOfBirth
+                        )
+                    }
                 }
             }
 
-            hero.occupation?.let { occupation ->
-                if (occupation.isNotEmpty()) {
-                    AnnotatedText(
-                        stringResource(R.string.occupation),
-                        occupation
-                    )
+            item {
+                hero.occupation?.let { occupation ->
+                    if (occupation.isNotEmpty()) {
+                        AnnotatedText(
+                            stringResource(R.string.occupation),
+                            occupation
+                        )
+                    }
                 }
             }
-
-            Spacer(
-                modifier = Modifier
-                    .height(8.dp)
-            )
-
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = stringResource(R.string.power_stats),
-                fontFamily = ubuntuFontFamily,
-            )
-            PowerstatsComponent(samplePowerstats)
+            item {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    textAlign = TextAlign.Center,
+                    text = stringResource(R.string.power_stats),
+                    fontFamily = ubuntuFontFamily,
+                )
+                PowerstatsComponent(samplePowerstats)
+            }
         }
     }
 
