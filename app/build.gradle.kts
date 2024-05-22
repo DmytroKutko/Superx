@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -24,6 +27,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val onesignalKey: String? = getLocalProperty("onesignal", project)
+        buildConfigField("String", "ONESIGNAL_KEY", "\"${onesignalKey}\"")
     }
 
     buildTypes {
@@ -44,6 +50,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.13"
@@ -114,8 +121,23 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
+
+    //OneSignal
+    implementation(libs.onesignal)
 }
 
 kapt {
     correctErrorTypes = true
+}
+
+// Function to read properties from local.properties
+fun getLocalProperty(propertyName: String, project: Project): String? {
+    val localProperties = File(project.rootDir, "local.properties")
+    if (localProperties.exists()) {
+        val properties = Properties().apply {
+            load(FileInputStream(localProperties))
+        }
+        return properties.getProperty(propertyName)
+    }
+    return null
 }

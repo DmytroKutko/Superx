@@ -24,13 +24,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupBackPressHandler()
         setContent {
             SuperxTheme {
                 AppNavigation()
             }
         }
+    }
 
-
+    private fun setupBackPressHandler(){
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (backPressedTime + backPressInterval > System.currentTimeMillis()) {
