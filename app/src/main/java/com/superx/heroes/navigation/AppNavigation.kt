@@ -23,6 +23,8 @@ import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
 import com.superx.heroes.navigation.nav_graph.favorites
 import com.superx.heroes.navigation.nav_graph.heroes
 import com.superx.heroes.navigation.nav_graph.profile
+import com.superx.heroes.navigation.nav_graph.signIn
+import com.superx.heroes.navigation.nav_graph.userProfile
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -33,7 +35,8 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
     val isBottomAppBarVisible = rememberSaveable(navBackStackEntry) {
         navBackStackEntry?.destination?.route == Screen.HeroesScreen.route ||
-                navBackStackEntry?.destination?.route == Screen.FavoritesScreen.route
+                navBackStackEntry?.destination?.route == Screen.FavoritesScreen.route ||
+                navBackStackEntry?.destination?.route == Screen.UserProfileScreen.route
     }
 
     Scaffold(
@@ -48,11 +51,13 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .padding(bottom = paddingValues.calculateBottomPadding()),
             navController = navController,
-            startDestination = Tab.Heroes.route
+            startDestination = Screen.LoginScreen.route
         ) {
             heroes(navController)
             favorites(navController)
             profile(navController)
+            signIn(navController)
+            userProfile(navController)
         }
     }
 
@@ -61,7 +66,6 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    modifier: Modifier = Modifier,
 ) {
     NavigationBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()

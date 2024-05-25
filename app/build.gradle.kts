@@ -30,6 +30,9 @@ android {
 
         val onesignalKey: String? = getLocalProperty("onesignal", project)
         buildConfigField("String", "ONESIGNAL_KEY", "\"${onesignalKey}\"")
+
+        val webClientId: String? = getLocalProperty("web.client.id", project)
+        buildConfigField("String", "WEB_CLIENT_ID", "\"${webClientId}\"")
     }
 
     buildTypes {
@@ -88,6 +91,8 @@ dependencies {
     //Firebase
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)

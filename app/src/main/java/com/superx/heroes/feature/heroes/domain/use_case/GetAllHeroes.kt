@@ -1,6 +1,5 @@
 package com.superx.heroes.feature.heroes.domain.use_case
 
-import android.util.Log
 import com.superx.heroes.api.model.toDomain
 import com.superx.heroes.database.model.Hero
 import com.superx.heroes.feature.heroes.domain.HeroRepository
@@ -22,7 +21,6 @@ class GetAllHeroes @Inject constructor(
 
             val response = remoteHeroRepository.getAllHeroes()
 
-            Log.d("Response_debug", "invoke: $response")
             if (response.isSuccessful) {
                 val responseList = response.body()?.toDomain() ?: emptyList()
                 repository.insertHeroes(responseList)

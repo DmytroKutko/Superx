@@ -17,12 +17,14 @@ materialIconsExtendedVersion = "1.6.2"
 moshiKotlin = "1.14.0"
 navigationCompose = "2.7.7"
 onesignal = "5.0.0"
+playServicesAuth = "21.2.0"
 retrofit = "2.9.0"
 roomRuntime = "2.6.1"
 googleGmsGoogleServices = "4.4.1"
 firebaseAnalytics = "22.0.0"
 firebaseCrashlytics = "19.0.0"
 googleFirebaseCrashlytics = "3.0.0"
+firebaseAuth = "23.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,9 +55,11 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
 onesignal = { module = "com.onesignal:OneSignal", version.ref = "onesignal" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
