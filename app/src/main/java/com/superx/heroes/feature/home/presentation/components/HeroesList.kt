@@ -27,7 +27,7 @@ fun HeroesList(
         state = listState
     ) {
         items(heroes) { hero ->
-            HeroCard(
+            HeroGridCard(
                 hero = hero,
                 onHeroClick = onHeroClick
             )
