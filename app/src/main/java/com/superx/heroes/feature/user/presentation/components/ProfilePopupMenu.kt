@@ -26,23 +26,25 @@ fun ProfileDropdownMenu(
     ) {
         DropdownMenuItem(
             leadingIcon = {
-            Icon(
-                imageVector = Icons.Filled.EditNote,
-                contentDescription = null
-            )
-        }, text = { Text(text = "Edit profile") }, onClick = {
-            onItemClicked(ProfilePopupMenu.EDIT)
-        })
+                Icon(
+                    imageVector = Icons.Filled.EditNote,
+                    contentDescription = null
+                )
+            }, text = { Text(text = "Edit profile") }, onClick = {
+                expanded.value = false
+                onItemClicked(ProfilePopupMenu.EDIT)
+            })
 
         DropdownMenuItem(
             leadingIcon = {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.Logout,
-                contentDescription = null
-            )
-        }, text = { Text(text = "Sign out") }, onClick = {
-            onItemClicked(ProfilePopupMenu.SIGN_OUT)
-        })
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Logout,
+                    contentDescription = null
+                )
+            }, text = { Text(text = "Sign out") }, onClick = {
+                expanded.value = false
+                onItemClicked(ProfilePopupMenu.SIGN_OUT)
+            })
     }
 }
 
