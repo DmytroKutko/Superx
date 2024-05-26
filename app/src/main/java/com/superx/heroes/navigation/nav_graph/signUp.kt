@@ -13,7 +13,9 @@ fun NavGraphBuilder.signUp(navController: NavController){
     ) {
         SignUpScreen(
             onSignUp = {
-                navController.navigate(Screen.HomeScreen.route)
+                navController.navigate(Screen.HomeScreen.route) {
+                    popUpTo(0) { inclusive = true }
+                }
             },
             onLoginClicked = {
                 navController.navigate(Screen.LoginScreen.route)

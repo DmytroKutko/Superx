@@ -21,7 +21,9 @@ fun NavGraphBuilder.userProfile(navController: NavController) {
 
                 },
                 onSignOutClicked = {
-                    navController.navigate(Screen.LoginScreen.route)
+                    navController.navigate(Screen.LoginScreen.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             )
         }

@@ -6,13 +6,15 @@ import androidx.navigation.compose.composable
 import com.superx.heroes.feature.auth.presentation.LoginScreen
 import com.superx.heroes.navigation.Screen
 
-fun NavGraphBuilder.signIn(navController: NavController){
+fun NavGraphBuilder.signIn(navController: NavController) {
     composable(
         route = Screen.LoginScreen.route
     ) {
         LoginScreen(
             onSuccessLogin = {
-                navController.navigate(Screen.HomeScreen.route)
+                navController.navigate(Screen.HomeScreen.route) {
+                    popUpTo(0) { inclusive = true }
+                }
             },
             onSignUpClicked = {
                 navController.navigate(Screen.SignUpScreen.route)
