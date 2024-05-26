@@ -52,7 +52,7 @@ fun HeroRowCard(
         ) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds,
+                contentScale = ContentScale.Crop,
                 painter = painter,
                 contentDescription = "Image loaded from URL"
             )

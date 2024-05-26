@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -52,14 +53,16 @@ fun HeroGridCard(
             contentAlignment = Alignment.TopEnd
         ) {
             Card(
+                modifier = Modifier
+                    .fillMaxSize(),
                 shape = RoundedCornerShape(18.dp)
             ) {
                 Image(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .size(180.dp),
                     painter = painter,
-                    contentScale = ContentScale.FillBounds,
+                    contentScale = ContentScale.Crop,
                     contentDescription = "Image loaded from URL"
                 )
             }
