@@ -13,7 +13,7 @@ fun NavGraphBuilder.signUp(navController: NavController){
     ) {
         SignUpScreen(
             onSignUp = {
-                navController.navigate(Screen.HeroesScreen.route)
+                navController.navigate(Screen.HomeScreen.route)
             },
             onLoginClicked = {
                 navController.navigate(Screen.LoginScreen.route)

@@ -1,4 +1,4 @@
-package com.superx.heroes.feature.heroes.domain
+package com.superx.heroes.feature.home.domain
 
 import com.superx.heroes.database.model.Hero
 import kotlinx.coroutines.flow.Flow

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.superx.heroes.database.model.Hero
 import com.superx.heroes.database.model.Powerstats
-import com.superx.heroes.feature.heroes.domain.use_case.UseCases
+import com.superx.heroes.feature.home.domain.use_case.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

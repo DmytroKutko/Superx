@@ -1,9 +1,9 @@
-package com.superx.heroes.feature.heroes.presentation
+package com.superx.heroes.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.superx.heroes.database.model.Hero
-import com.superx.heroes.feature.heroes.domain.use_case.UseCases
+import com.superx.heroes.feature.home.domain.use_case.UseCases
 import com.superx.heroes.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

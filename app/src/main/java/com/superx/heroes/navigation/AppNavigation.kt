@@ -21,7 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
 import com.superx.heroes.navigation.nav_graph.favorites
-import com.superx.heroes.navigation.nav_graph.heroes
+import com.superx.heroes.navigation.nav_graph.home
 import com.superx.heroes.navigation.nav_graph.profile
 import com.superx.heroes.navigation.nav_graph.signIn
 import com.superx.heroes.navigation.nav_graph.signUp
@@ -30,12 +30,12 @@ import com.superx.heroes.navigation.nav_graph.userProfile
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AppNavigation(modifier: Modifier = Modifier) {
+fun AppNavigation() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     val isBottomAppBarVisible = rememberSaveable(navBackStackEntry) {
-        navBackStackEntry?.destination?.route == Screen.HeroesScreen.route ||
+        navBackStackEntry?.destination?.route == Screen.HomeScreen.route ||
                 navBackStackEntry?.destination?.route == Screen.FavoritesScreen.route ||
                 navBackStackEntry?.destination?.route == Screen.UserProfileScreen.route
     }
@@ -54,7 +54,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             navController = navController,
             startDestination = Screen.LoginScreen.route
         ) {
-            heroes(navController)
+            home(navController)
             favorites(navController)
             profile(navController)
             signIn(navController)

@@ -30,7 +30,7 @@ import com.superx.heroes.feature.core.presentation.EmptyScreen
 import com.superx.heroes.feature.core.presentation.ErrorScreen
 import com.superx.heroes.feature.core.presentation.LoadingScreen
 import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
-import com.superx.heroes.feature.heroes.presentation.components.HeroesList
+import com.superx.heroes.feature.home.presentation.components.HeroesList
 import com.superx.heroes.util.Response
 import kotlinx.coroutines.flow.distinctUntilChanged
 

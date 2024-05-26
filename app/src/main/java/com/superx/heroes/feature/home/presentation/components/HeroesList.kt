@@ -1,4 +1,4 @@
-package com.superx.heroes.feature.heroes.presentation.components
+package com.superx.heroes.feature.home.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize

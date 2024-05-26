@@ -1,9 +1,9 @@
-package com.superx.heroes.feature.heroes.domain.use_case
+package com.superx.heroes.feature.home.domain.use_case
 
 import com.superx.heroes.api.model.toDomain
 import com.superx.heroes.database.model.Hero
-import com.superx.heroes.feature.heroes.domain.HeroRepository
-import com.superx.heroes.feature.heroes.domain.RemoteHeroRepository
+import com.superx.heroes.feature.home.domain.HeroRepository
+import com.superx.heroes.feature.home.domain.RemoteHeroRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow

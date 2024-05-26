@@ -3,14 +3,16 @@ package com.superx.heroes.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val route: String) {
-    data object HeroesScreen : Screen("heroes_screen")
+    data object HomeScreen : Screen("home_screen")
     data object UserProfileScreen : Screen("user_screen")
     data object FavoritesScreen : Screen("favorites_screen")
     data object ProfileScreen : Screen("profile_screen")
@@ -24,11 +26,11 @@ sealed class Tab(
     val selectedIcon: ImageVector,
     val label: String,
 ) {
-    data object Heroes : Tab(
-        route = "heroes_tab",
+    data object Home : Tab(
+        route = "home_tab",
         icon = BottomAppBarIcons.heroIconOutlined,
         selectedIcon = BottomAppBarIcons.heroIconFilled,
-        label = "Heroes"
+        label = "Home"
     )
 
     data object Favorites : Tab(
@@ -47,8 +49,8 @@ sealed class Tab(
 }
 
 private object BottomAppBarIcons {
-    val heroIconOutlined = Icons.AutoMirrored.Outlined.List
-    val heroIconFilled = Icons.AutoMirrored.Filled.List
+    val heroIconOutlined = Icons.Outlined.Home
+    val heroIconFilled = Icons.Filled.Home
 
     val favoritesIconOutlined = Icons.Outlined.StarOutline
     val favoritesIconFilled = Icons.Filled.Star
@@ -58,7 +60,7 @@ private object BottomAppBarIcons {
 }
 
 val bottomNavTabs = listOf(
-    Tab.Heroes,
+    Tab.Home,
     Tab.Favorites,
     Tab.UserProfile
 )

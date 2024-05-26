@@ -1,8 +1,8 @@
-package com.superx.heroes.feature.heroes.data
+package com.superx.heroes.feature.home.data
 
 import com.superx.heroes.database.HeroDao
 import com.superx.heroes.database.model.Hero
-import com.superx.heroes.feature.heroes.domain.HeroRepository
+import com.superx.heroes.feature.home.domain.HeroRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
