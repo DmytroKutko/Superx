@@ -7,9 +7,9 @@ import com.superx.heroes.util.Constants.USER_NAME
 import javax.inject.Inject
 
 interface SuperXPrefs {
-    var userPhotoUrl: String?
     var userId: String
     var userDisplayName: String
+    var userPhotoUrl: String?
 }
 
 class SuperXPrefsImpl @Inject constructor(

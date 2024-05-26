@@ -9,14 +9,18 @@ import javax.inject.Inject
 class SignOutUseCase @Inject constructor(
     private val auth: FirebaseAuth,
     private val googleSignInClient: GoogleSignInClient,
-    private val prefs: SuperXPrefs
+    private val prefs: SuperXPrefs,
+    private val loginManager: LoginManager,
 ) {
     operator fun invoke() {
+        loginManager.logOut()
         auth.signOut()
         googleSignInClient.signOut()
-        LoginManager.getInstance().logOut()
+
         prefs.userId = ""
         prefs.userDisplayName = ""
         prefs.userPhotoUrl = null
     }
+
 }
+

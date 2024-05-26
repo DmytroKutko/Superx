@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.facebook.CallbackManager
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -62,6 +63,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideCallbackManager(): CallbackManager = CallbackManager.Factory.create()
+
+    @Provides
+    @Singleton
+    fun provideLoginManager(): LoginManager = LoginManager.getInstance()
 
     @Provides
     @Singleton
@@ -137,7 +142,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGoogleAuthUseCases(auth: FirebaseAuth, googleSignInClient: GoogleSignInClient, prefs: SuperXPrefs) =
+    fun provideGoogleAuthUseCases(auth: FirebaseAuth, googleSignInClient: GoogleSignInClient, prefs: SuperXPrefs, loginManager: LoginManager) =
         AuthUseCases(
             googleSignIn = GoogleSignInUseCase(
                 auth = auth,
@@ -147,7 +152,8 @@ object AppModule {
             signOut = SignOutUseCase(
                 googleSignInClient = googleSignInClient,
                 auth = auth,
-                prefs = prefs
+                prefs = prefs,
+                loginManager = loginManager
             ),
             facebookSignIn = FacebookSignInUseCase(
                 prefs = prefs

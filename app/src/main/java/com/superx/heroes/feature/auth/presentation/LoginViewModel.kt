@@ -2,18 +2,12 @@ package com.superx.heroes.feature.auth.presentation
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
 import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
-import com.superx.heroes.database.SuperXPrefs
 import com.superx.heroes.feature.auth.domain.use_case.AuthUseCases
 import com.superx.heroes.util.Constants.FACEBOOK_SIGN_IN
 import com.superx.heroes.util.Constants.GOOGLE_SIGN_IN
@@ -27,22 +21,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val googleSignInClient: GoogleSignInClient,
     private val authUseCases: AuthUseCases,
     private val onActivityResultFlow: MutableSharedFlow<Pair<Int, Intent?>>,
-    private val prefs: SuperXPrefs,
-    private val callbackManager: CallbackManager,
+    private val loginManager: LoginManager
 ) : ViewModel() {
 
-    private val _signInResult: MutableStateFlow<Response<Boolean>> =
-        MutableStateFlow(Response.Idle)
+    private val _signInResult: MutableStateFlow<Response<Boolean>> = MutableStateFlow(Response.Idle)
     val signInResult: StateFlow<Response<Boolean>> = _signInResult.asStateFlow()
-
-    private val loginManager = LoginManager.getInstance()
 
     init {
         viewModelScope.launch {
@@ -97,21 +86,6 @@ class LoginViewModel @Inject constructor(
     }
 
     fun signInWithFacebook(context: Activity) = viewModelScope.launch {
-        loginManager.logInWithReadPermissions(context, listOf("public_profile", "email"))
-        loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(result: LoginResult) {
-                viewModelScope.launch {
-                    authUseCases.facebookSignIn()
-                }
-            }
-
-            override fun onCancel() {
-                Log.d("Facebook_sign_in_debug", "onCancel: Login Cancelled")
-            }
-
-            override fun onError(error: FacebookException) {
-                Log.d("Facebook_sign_in_debug", "onError: $error")
-            }
-        })
+        loginManager.logInWithReadPermissions(context, listOf("email"))
     }
 }
