@@ -24,6 +24,7 @@ import com.superx.heroes.navigation.nav_graph.favorites
 import com.superx.heroes.navigation.nav_graph.heroes
 import com.superx.heroes.navigation.nav_graph.profile
 import com.superx.heroes.navigation.nav_graph.signIn
+import com.superx.heroes.navigation.nav_graph.signUp
 import com.superx.heroes.navigation.nav_graph.userProfile
 
 
@@ -57,6 +58,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             favorites(navController)
             profile(navController)
             signIn(navController)
+            signUp(navController)
             userProfile(navController)
         }
     }

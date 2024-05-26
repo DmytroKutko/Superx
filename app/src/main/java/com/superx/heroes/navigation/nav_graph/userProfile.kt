@@ -8,7 +8,6 @@ import com.superx.heroes.feature.user.presentation.UserProfileScreen
 import com.superx.heroes.navigation.Screen
 import com.superx.heroes.navigation.Tab
 
-
 fun NavGraphBuilder.userProfile(navController: NavController) {
     navigation(
         startDestination = Screen.UserProfileScreen.route,
@@ -18,6 +17,9 @@ fun NavGraphBuilder.userProfile(navController: NavController) {
             route = Screen.UserProfileScreen.route,
         ) {
             UserProfileScreen(
+                onEditClicked = {
+
+                },
                 onSignOutClicked = {
                     navController.navigate(Screen.LoginScreen.route)
                 }

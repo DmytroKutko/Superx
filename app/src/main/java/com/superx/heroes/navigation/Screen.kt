@@ -15,6 +15,7 @@ sealed class Screen(val route: String) {
     data object FavoritesScreen : Screen("favorites_screen")
     data object ProfileScreen : Screen("profile_screen")
     data object LoginScreen : Screen("login_screen")
+    data object SignUpScreen : Screen("sign_up_screen")
 }
 
 sealed class Tab(
