@@ -40,7 +40,6 @@ fun ProfileScreen(
     heroId: Int,
     navController: NavController,
     viewModel: ProfileViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier,
 ) {
     viewModel.getHeroById(heroId)
     val hero by viewModel.hero.collectAsStateWithLifecycle()
@@ -121,10 +120,15 @@ fun ProfileScreen(
 
             item {
                 hero.placeOfBirth?.let { placeOfBirth ->
-                    if (placeOfBirth.isNotEmpty()) {
+                    if (placeOfBirth != "-") {
                         AnnotatedText(
                             stringResource(R.string.place_of_birth),
                             placeOfBirth
+                        )
+                    } else {
+                        AnnotatedText(
+                            stringResource(R.string.place_of_birth),
+                            "Unknown"
                         )
                     }
                 }
@@ -132,10 +136,15 @@ fun ProfileScreen(
 
             item {
                 hero.occupation?.let { occupation ->
-                    if (occupation.isNotEmpty()) {
+                    if (occupation != "-") {
                         AnnotatedText(
                             stringResource(R.string.occupation),
                             occupation
+                        )
+                    } else {
+                        AnnotatedText(
+                            stringResource(R.string.occupation),
+                            "Unknown"
                         )
                     }
                 }

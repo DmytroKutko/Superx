@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -25,11 +26,13 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 fun FullScreenCircleImage(
     imageResource: String,
-    modifier: Modifier = Modifier
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
-    Box(modifier = modifier) {
+    Box(
+        modifier = Modifier
+            .padding(top = 12.dp)
+    ) {
         Image(
             painter = rememberAsyncImagePainter(imageResource),
             contentDescription = null,
@@ -54,7 +57,7 @@ fun FullScreenCircleImage(
 @Composable
 fun FullScreenImageDialog(
     imageResource: String,
-    onClose: () -> Unit
+    onClose: () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onClose,
