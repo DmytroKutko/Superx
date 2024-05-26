@@ -141,7 +141,8 @@ object AppModule {
         AuthUseCases(
             googleSignIn = GoogleSignInUseCase(
                 auth = auth,
-                googleSignInClient = googleSignInClient
+                googleSignInClient = googleSignInClient,
+                prefs = prefs
             ),
             signOut = SignOutUseCase(
                 googleSignInClient = googleSignInClient,
