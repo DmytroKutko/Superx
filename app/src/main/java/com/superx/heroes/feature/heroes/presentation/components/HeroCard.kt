@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,13 +31,12 @@ import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
 fun HeroCard(
     hero: Hero,
     onHeroClick: (Int) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(top = 8.dp, start = 6.dp, end = 6.dp)
             .clickable {
                 onHeroClick(hero.id)
             },
@@ -52,11 +52,11 @@ fun HeroCard(
             contentAlignment = Alignment.TopEnd
         ) {
             Card(
-                modifier = Modifier,
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(8.dp),
             ) {
                 Image(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .size(180.dp),
                     painter = painter,
                     contentDescription = "Image loaded from URL"
