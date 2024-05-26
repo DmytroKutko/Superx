@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,11 +47,12 @@ fun HeroRowCard(
         Card(
             modifier = Modifier
                 .height(160.dp)
-                .width(106.dp),
+                .width(100.dp),
             shape = RoundedCornerShape(18.dp)
         ) {
             Image(
                 modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds,
                 painter = painter,
                 contentDescription = "Image loaded from URL"
             )

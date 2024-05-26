@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,13 +52,14 @@ fun HeroGridCard(
             contentAlignment = Alignment.TopEnd
         ) {
             Card(
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(18.dp)
             ) {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
                         .size(180.dp),
                     painter = painter,
+                    contentScale = ContentScale.FillBounds,
                     contentDescription = "Image loaded from URL"
                 )
             }
