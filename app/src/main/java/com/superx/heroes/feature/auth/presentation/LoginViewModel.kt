@@ -2,14 +2,21 @@ package com.superx.heroes.feature.auth.presentation
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.superx.heroes.database.SuperXPrefs
-import com.superx.heroes.feature.auth.domain.use_case.GoogleAuthUseCases
-import com.superx.heroes.util.Constants.RC_SIGN_IN
+import com.superx.heroes.feature.auth.domain.use_case.AuthUseCases
+import com.superx.heroes.util.Constants.FACEBOOK_SIGN_IN
+import com.superx.heroes.util.Constants.GOOGLE_SIGN_IN
 import com.superx.heroes.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,60 +24,94 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val googleSignInClient: GoogleSignInClient,
-    private val googleAuthUseCases: GoogleAuthUseCases,
+    private val authUseCases: AuthUseCases,
     private val onActivityResultFlow: MutableSharedFlow<Pair<Int, Intent?>>,
-    private val prefs: SuperXPrefs
-    ) : ViewModel() {
+    private val prefs: SuperXPrefs,
+    private val callbackManager: CallbackManager,
+) : ViewModel() {
 
-    private val _signInResult: MutableStateFlow<Response<FirebaseUser>> =
+    private val _signInResult: MutableStateFlow<Response<Boolean>> =
         MutableStateFlow(Response.Idle)
-    val signInResult: StateFlow<Response<FirebaseUser>> = _signInResult.asStateFlow()
+    val signInResult: StateFlow<Response<Boolean>> = _signInResult.asStateFlow()
+
+    private val loginManager = LoginManager.getInstance()
 
     init {
         viewModelScope.launch {
             onActivityResultFlow
                 .collect { pair ->
-                    if (pair.first == RC_SIGN_IN) {
-                        googleAuthUseCases.signIn(pair.second)
-                            .onStart {
-                                _signInResult.emit(Response.Loading)
-                            }
+                    if (pair.first == GOOGLE_SIGN_IN) {
+                        authUseCases.googleSignIn(pair.second)
                             .catch {
                                 _signInResult.emit(Response.Error(it))
                             }
                             .collect { firebaseUser ->
-                                firebaseUser?.let {
-                                    it.apply {
-                                        prefs.userId = uid
-                                        prefs.userDisplayName = displayName.toString()
-                                        prefs.userPhotoUrl = photoUrl.toString()
-                                    }
-                                    _signInResult.emit(Response.Success(it))
-                                } ?: run {
-                                    _signInResult.emit(Response.Error(Throwable(message = "User not found")))
+                                firebaseUser.let { success ->
+                                    if (success)
+                                        _signInResult.emit(Response.Success(true))
+                                    else
+                                        _signInResult.emit(Response.Error(Throwable("Error sign in")))
                                 }
+                            }
+                    } else if (pair.first == FACEBOOK_SIGN_IN) {
+                        authUseCases.facebookSignIn()
+                            .catch {
+                                _signInResult.emit(Response.Error(it))
+                            }
+                            .collect { success ->
+                                if (success)
+                                    _signInResult.emit(Response.Success(success))
+                                else
+                                    _signInResult.emit(Response.Error(Throwable("Error sign in")))
                             }
                     }
                 }
         }
     }
 
-    fun signInWithGoogle(activity: Activity) = viewModelScope.launch {
-        val sigInIntent = googleSignInClient.signInIntent
-        activity.startActivityForResult(sigInIntent, RC_SIGN_IN)
+    fun isLoggedIn(invoke: () -> Unit) {
+        if (isUserLoggedIn()) {
+            invoke()
+        }
     }
 
-    fun isLoggedIn(invoke: (FirebaseUser) -> Unit) {
-        auth.currentUser?.let {
-            invoke(it)
-        }
+    private fun isUserLoggedIn(): Boolean {
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedInFacebook = accessToken != null && !accessToken.isExpired
+        val isLoggedInFirebase = auth.currentUser != null
+
+        return isLoggedInFacebook || isLoggedInFirebase
+    }
+
+    fun signInWithGoogle(activity: Activity) = viewModelScope.launch {
+        val sigInIntent = googleSignInClient.signInIntent
+        activity.startActivityForResult(sigInIntent, GOOGLE_SIGN_IN)
+    }
+
+    fun signInWithFacebook(context: Activity) = viewModelScope.launch {
+        loginManager.logInWithReadPermissions(context, listOf("public_profile", "email"))
+        loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult) {
+                viewModelScope.launch {
+                    authUseCases.facebookSignIn()
+                }
+            }
+
+            override fun onCancel() {
+                Log.d("Facebook_sign_in_debug", "onCancel: Login Cancelled")
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d("Facebook_sign_in_debug", "onError: $error")
+            }
+        })
     }
 }

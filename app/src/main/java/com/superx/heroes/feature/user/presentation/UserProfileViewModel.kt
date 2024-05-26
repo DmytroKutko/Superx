@@ -2,9 +2,10 @@ package com.superx.heroes.feature.user.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.superx.heroes.database.SuperXPrefs
-import com.superx.heroes.feature.auth.domain.use_case.GoogleAuthUseCases
+import com.superx.heroes.feature.auth.domain.use_case.AuthUseCases
 import com.superx.heroes.feature.user.data.UserProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(
     private val prefs: SuperXPrefs,
-    private val googleAuthUseCases: GoogleAuthUseCases,
-    private val auth: FirebaseAuth
+    private val authUseCases: AuthUseCases,
 ) : ViewModel() {
 
     private val _currentUser: MutableStateFlow<UserProfile> = MutableStateFlow(UserProfile("", "", null))
@@ -35,7 +35,7 @@ class UserProfileViewModel @Inject constructor(
     }
 
     fun signOut() = viewModelScope.launch {
-        auth.signOut()
-        googleAuthUseCases.signOut()
+        authUseCases.signOut()
     }
+
 }

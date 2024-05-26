@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.room.Room
+import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,9 +21,10 @@ import com.superx.heroes.database.LocalDatabase
 import com.superx.heroes.database.SuperXPrefs
 import com.superx.heroes.database.SuperXPrefsImpl
 import com.superx.heroes.database.model.Hero
-import com.superx.heroes.feature.auth.domain.use_case.GoogleAuthUseCases
+import com.superx.heroes.feature.auth.domain.use_case.AuthUseCases
+import com.superx.heroes.feature.auth.domain.use_case.FacebookSignInUseCase
 import com.superx.heroes.feature.auth.domain.use_case.GoogleSignInUseCase
-import com.superx.heroes.feature.auth.domain.use_case.GoogleSignOutUseCase
+import com.superx.heroes.feature.auth.domain.use_case.SignOutUseCase
 import com.superx.heroes.feature.heroes.data.HeroRepositoryImpl
 import com.superx.heroes.feature.heroes.data.RemoteHeroRepositoryImpl
 import com.superx.heroes.feature.heroes.domain.HeroRepository
@@ -56,6 +58,10 @@ object AppModule {
     @Singleton
     fun providesSuperXPrefs(preferences: SharedPreferences): SuperXPrefs =
         SuperXPrefsImpl(preferences)
+
+    @Provides
+    @Singleton
+    fun provideCallbackManager(): CallbackManager = CallbackManager.Factory.create()
 
     @Provides
     @Singleton
@@ -131,14 +137,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGoogleAuthUseCases(auth: FirebaseAuth, googleSignInClient: GoogleSignInClient) =
-        GoogleAuthUseCases(
-            signIn = GoogleSignInUseCase(
+    fun provideGoogleAuthUseCases(auth: FirebaseAuth, googleSignInClient: GoogleSignInClient, prefs: SuperXPrefs) =
+        AuthUseCases(
+            googleSignIn = GoogleSignInUseCase(
                 auth = auth,
                 googleSignInClient = googleSignInClient
             ),
-            signOut = GoogleSignOutUseCase(
-                googleSignInClient = googleSignInClient
+            signOut = SignOutUseCase(
+                googleSignInClient = googleSignInClient,
+                auth = auth,
+                prefs = prefs
+            ),
+            facebookSignIn = FacebookSignInUseCase(
+                prefs = prefs
             )
         )
 

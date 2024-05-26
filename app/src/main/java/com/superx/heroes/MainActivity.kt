@@ -2,12 +2,14 @@ package com.superx.heroes
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
+import com.facebook.CallbackManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.superx.heroes.feature.core.ui.theme.SuperxTheme
 import com.superx.heroes.navigation.AppNavigation
@@ -28,6 +30,9 @@ class MainActivity: ComponentActivity() {
     @Inject
     lateinit var onActivityResultFlow: MutableSharedFlow<Pair<Int, Intent?>>
 
+    @Inject
+    lateinit var callbackManager: CallbackManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,6 +47,7 @@ class MainActivity: ComponentActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
         lifecycleScope.launch {
             onActivityResultFlow.emit(Pair(requestCode, data))
         }

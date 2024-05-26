@@ -121,14 +121,14 @@ dependencies {
     implementation(libs.converter.moshi)
     implementation(libs.moshi.kotlin)
 
-    // Extended Icons
-    implementation(libs.androidx.material.icons.extended.v162)
-
     // Coil
     implementation(libs.coil.compose)
 
     //OneSignal
     implementation(libs.onesignal)
+
+    //Facebook
+    implementation(libs.facebook.login)
 }
 
 kapt {
