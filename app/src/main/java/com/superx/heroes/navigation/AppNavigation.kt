@@ -22,7 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.superx.heroes.feature.core.ui.theme.ubuntuFontFamily
 import com.superx.heroes.navigation.nav_graph.favorites
 import com.superx.heroes.navigation.nav_graph.home
-import com.superx.heroes.navigation.nav_graph.profile
+import com.superx.heroes.navigation.nav_graph.heroProfile
 import com.superx.heroes.navigation.nav_graph.signIn
 import com.superx.heroes.navigation.nav_graph.signUp
 import com.superx.heroes.navigation.nav_graph.userProfile
@@ -56,7 +56,7 @@ fun AppNavigation() {
         ) {
             home(navController)
             favorites(navController)
-            profile(navController)
+            heroProfile(navController)
             signIn(navController)
             signUp(navController)
             userProfile(navController)

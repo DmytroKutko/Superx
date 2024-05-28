@@ -8,13 +8,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
-import com.facebook.CallbackManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.superx.heroes.feature.core.ui.theme.SuperxTheme
 import com.superx.heroes.navigation.AppNavigation
 import com.superx.heroes.util.Constants.backPressInterval
 import com.superx.heroes.util.Constants.backPressedTime
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,9 +28,6 @@ class MainActivity: ComponentActivity() {
 
     @Inject
     lateinit var onActivityResultFlow: MutableSharedFlow<Pair<Int, Intent?>>
-
-    @Inject
-    lateinit var callbackManager: CallbackManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +43,7 @@ class MainActivity: ComponentActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             onActivityResultFlow.emit(Pair(requestCode, data))
         }
     }

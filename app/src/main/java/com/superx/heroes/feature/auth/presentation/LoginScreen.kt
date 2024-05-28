@@ -32,10 +32,6 @@ fun LoginScreen(
 
     val response by viewModel.signInResult.collectAsStateWithLifecycle()
 
-    viewModel.isLoggedIn {
-        onSuccessLogin()
-    }
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(

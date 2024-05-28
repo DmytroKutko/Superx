@@ -62,10 +62,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCallbackManager(): CallbackManager = CallbackManager.Factory.create()
-
-    @Provides
-    @Singleton
     fun provideLoginManager(): LoginManager = LoginManager.getInstance()
 
     @Provides

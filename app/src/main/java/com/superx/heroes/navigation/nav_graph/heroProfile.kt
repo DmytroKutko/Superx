@@ -12,7 +12,7 @@ import androidx.navigation.navArgument
 import com.superx.heroes.feature.profile.presentation.ProfileScreen
 import com.superx.heroes.navigation.Screen
 
-fun NavGraphBuilder.profile(navController: NavController) {
+fun NavGraphBuilder.heroProfile(navController: NavController) {
     composable(
         route = "${Screen.ProfileScreen.route}/{heroId}",
         arguments = listOf(navArgument("heroId") { type = NavType.IntType }),

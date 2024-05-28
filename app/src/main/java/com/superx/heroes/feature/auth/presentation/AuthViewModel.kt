@@ -2,15 +2,11 @@ package com.superx.heroes.feature.auth.presentation
 
 import android.app.Activity
 import android.content.Intent
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.facebook.AccessToken
-import com.facebook.FacebookCallback
 import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.superx.heroes.feature.auth.domain.use_case.AuthUseCases
 import com.superx.heroes.util.Constants.FACEBOOK_SIGN_IN
@@ -39,6 +35,8 @@ class AuthViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            isLoggedIn()
+
             onActivityResultFlow
                 .collect { pair ->
                     if (pair.first == GOOGLE_SIGN_IN) {
@@ -70,9 +68,12 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun isLoggedIn(invoke: () -> Unit) {
+    private fun isLoggedIn() = viewModelScope.launch {
+        _signInResult.emit(Response.Loading)
         if (isUserLoggedIn()) {
-            invoke()
+            _signInResult.emit(Response.Success(true))
+        } else {
+            _signInResult.emit(Response.Idle)
         }
     }
 
@@ -93,57 +94,59 @@ class AuthViewModel @Inject constructor(
         loginManager.logInWithReadPermissions(context, listOf("email"))
     }
 
-    fun signInWithEmailAndPassword(context: Activity, email: String, password: String) = viewModelScope.launch {
-        _signInResult.emit(Response.Loading)
+    fun signInWithEmailAndPassword(context: Activity, email: String, password: String) =
+        viewModelScope.launch {
+            _signInResult.emit(Response.Loading)
 
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCanceledListener {
-                viewModelScope.launch {
-                    _signInResult.emit(Response.Idle)
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _signInResult.emit(Response.Error(Throwable(it.message.toString())))
-                }
-            }
-            .addOnCompleteListener(context) { task ->
-                if (task.isSuccessful) {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCanceledListener {
                     viewModelScope.launch {
-                        _signInResult.emit(Response.Success(true))
-                    }
-                } else {
-                    viewModelScope.launch {
-                        _signInResult.emit(Response.Error(Throwable(task.exception?.message.toString())))
+                        _signInResult.emit(Response.Idle)
                     }
                 }
-            }
-    }
+                .addOnFailureListener {
+                    viewModelScope.launch {
+                        _signInResult.emit(Response.Error(Throwable(it.message.toString())))
+                    }
+                }
+                .addOnCompleteListener(context) { task ->
+                    if (task.isSuccessful) {
+                        viewModelScope.launch {
+                            _signInResult.emit(Response.Success(true))
+                        }
+                    } else {
+                        viewModelScope.launch {
+                            _signInResult.emit(Response.Error(Throwable(task.exception?.message.toString())))
+                        }
+                    }
+                }
+        }
 
-    fun signUpWithEmailAndPassword(context: Activity, email: String, password: String) = viewModelScope.launch {
-        _signInResult.emit(Response.Loading)
+    fun signUpWithEmailAndPassword(context: Activity, email: String, password: String) =
+        viewModelScope.launch {
+            _signInResult.emit(Response.Loading)
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCanceledListener {
-                viewModelScope.launch {
-                    _signInResult.emit(Response.Idle)
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _signInResult.emit(Response.Error(Throwable(it.message.toString())))
-                }
-            }
-            .addOnCompleteListener(context) { task ->
-                if (task.isSuccessful) {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCanceledListener {
                     viewModelScope.launch {
-                        _signInResult.emit(Response.Success(true))
-                    }
-                } else {
-                    viewModelScope.launch {
-                        _signInResult.emit(Response.Error(Throwable(task.exception?.message.toString())))
+                        _signInResult.emit(Response.Idle)
                     }
                 }
-            }
-    }
+                .addOnFailureListener {
+                    viewModelScope.launch {
+                        _signInResult.emit(Response.Error(Throwable(it.message.toString())))
+                    }
+                }
+                .addOnCompleteListener(context) { task ->
+                    if (task.isSuccessful) {
+                        viewModelScope.launch {
+                            _signInResult.emit(Response.Success(true))
+                        }
+                    } else {
+                        viewModelScope.launch {
+                            _signInResult.emit(Response.Error(Throwable(task.exception?.message.toString())))
+                        }
+                    }
+                }
+        }
 }
